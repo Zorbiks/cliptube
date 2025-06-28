@@ -3,8 +3,13 @@
 script_name=$(basename $0)
 
 print_help() {
-    echo "usage: $script_name -s START_TIME -t END_TIME -q RESOLUTION -u URL"
-    echo "RESOLUTION: 144, 360, 480, 720, 1080 ..."
+    echo "./cliptube.sh -s START_TIME -t END_TIME -q RESOLUTION -u URL"
+    echo
+    echo "Arguments:"
+    echo "  -s START_TIME: Start time of the clip (e.g., 00:01:30)"
+    echo "  -t END_TIME: End time of the clip (e.g., 00:03:00)"
+    echo "  -q RESOLUTION: Video resolution (must be one of: 144, 360, 480, 720, 1080)"
+    echo "  -u URL: Full YouTube video URL"
 }
 
 start_time=
@@ -25,7 +30,7 @@ done
 
 if [[ -z "$start_time" ]] || [[ -z "$end_time" ]] || [[ -z "$quality" ]] || [[ -z "$url" ]];
 then
-    help
+    print_help
     exit 1
 fi
 
