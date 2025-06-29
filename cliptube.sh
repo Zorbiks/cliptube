@@ -42,9 +42,10 @@ original_video_url=$(yt-dlp -f "bv[vcodec^=avc1][height=$quality]" -g "$url")
 original_audio_url=$(yt-dlp -f "ba" -g "$url")
 video_title=$(yt-dlp --get-title "$url")
 
-ffmpeg -hide_banner -ss "$start_time" -to "$end_time" \
-  -i "$original_video_url" -ss "$start_time" -to "$end_time" -i "$original_audio_url" \
-  -map 0:v:0 -map 1:a:0 \
-  -c:v libx264 -preset fast -crf 26 -tune film \
-  -c:a copy \
-  "$$ - $video_title.mp4"
+ffmpeg -hide_banner \
+    -ss "$start_time" -to "$end_time" -i "$original_video_url" \
+    -ss "$start_time" -to "$end_time" -i "$original_audio_url" \
+    -map 0:v:0 -map 1:a:0 \
+    -c:v libx264 -preset fast -crf 26 -tune film \
+    -c:a copy \
+    "$$ - $video_title.mp4"
