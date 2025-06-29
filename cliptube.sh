@@ -3,7 +3,7 @@
 script_name=$(basename $0)
 
 print_help() {
-    echo "./cliptube.sh -s START_TIME -t END_TIME -q RESOLUTION -u URL"
+    echo "./$script_name -s START_TIME -t END_TIME -q RESOLUTION -u URL"
     echo
     echo "Arguments:"
     echo "  -s START_TIME: Start time of the clip (e.g., 00:01:30)"
@@ -11,12 +11,6 @@ print_help() {
     echo "  -q RESOLUTION: Video resolution (must be one of: 144, 360, 480, 720, 1080)"
     echo "  -u URL: Full YouTube video URL"
 }
-
-start_time=
-end_time=
-quality=
-url=
-
 
 while getopts "s:t:q:u:" opt
 do
@@ -47,8 +41,6 @@ esac
 original_video_url=$(yt-dlp -f "bv[vcodec^=avc1][height=$quality]" -g "$url")
 original_audio_url=$(yt-dlp -f "ba" -g "$url")
 video_title=$(yt-dlp --get-title "$url")
-
-
 
 ffmpeg -hide_banner -ss "$start_time" -to "$end_time" \
   -i "$original_video_url" -ss "$start_time" -to "$end_time" -i "$original_audio_url" \
